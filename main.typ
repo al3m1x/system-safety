@@ -60,7 +60,7 @@ Na powyższym schemacie poglądowym widać fizyczną budowę urządzenia, w tym 
 
 Aby umożliwić przejrzystą analizę bezpieczeństwa na poziomie architektury systemu, zrezygnowano z modelowania pojedynczych podzespołów fizycznych na rzecz głównych bloków funkcjonalnych. Wewnętrzne elementy toru terapeutycznego (takie jak działo elektronowe, generator RF, falowód przyspieszający czy magnes zakrzywiający) zostały logicznie połączone i zdefiniowane jako jeden nadrzędny komponent – *Akcelerator liniowy*. Podobnie ciężkie ramy mechaniczne (Gantry, Stand) zostały ujęte funkcjonalnie pod postacią napędzających je *Silników pozycjonujących*. Pozwala to na precyzyjną identyfikację interfejsów bez zbędnego zaciemniania analizy (np. drzew FTA).
 
-Zgodnie z tym założeniem, system składa się z dokładnie 11 głównych komponentów:
+Zgodnie z tym założeniem, system składa się z dokładnie 12 głównych komponentów:
 
 #figure(
   image("LINAC.drawio.png", width: 90%),
