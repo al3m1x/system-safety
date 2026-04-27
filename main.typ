@@ -3,8 +3,11 @@
   margin: (x: 2cm, y: 2.5cm),
   header: align(right)[
     #text(8pt, fill: luma(100))[
-      Projekt: Safety-Critical Systems | Autor: Twój Zespół \
-      Politechnika Gdańska, 2026
+      Autorzy: 
+      \ Juliusz Radziszewski s193504
+      \ Adrian Szwaczyk s193233
+      \ Sebastian Kwaśniak s188807
+      \ Maciej Żuralski s193367
     ]
   ],
   footer: context {
@@ -19,10 +22,12 @@
 #set par(justify: true)
 
 #align(center)[
+  #text(11pt, weight: "bold")[#strong[Politechnika Gdańska]] \
+  #v(0.5em)
   #text(17pt, weight: "bold")[Opis systemu do radioterapii LINAC] \
   #v(1em)
   #text(12pt)[Projekt: Systemy Krytyczne (Safety-Critical Systems)] \
-  #text(11pt)[Wersja: 1.2 | Data: #datetime.today().display()]
+  #text(11pt)[Wersja: 1.3 | Data: #datetime.today().display()]
 ]
 
 #line(length: 100%, stroke: 1pt + gray)
@@ -138,4 +143,4 @@ a) *Zakres wykorzystania:*
 Sztuczna inteligencja została wykorzystana przede wszystkim jako źródło wiedzy dziedzinowej w celu identyfikacji kluczowych komponentów systemu LINAC oraz opracowania ich technicznych opisów. Narzędzia AI wsparły proces definiowania procedury radioterapii oraz ogólnego formatowania dokumentu w języku Typst. Ponadto AI posłużyło do przeprowadzenia korekty językowej, stylistycznej oraz znalezienia błędów merytorycznych w tekście.
 
 b) *Weryfikacja wyników:*
-Wszystkie informacje wygenerowane przy wsparciu AI zostały poddane ręcznej weryfikacji przez zespół projektowy. Sprawdzono spójność techniczną opisów komponentów z ogólnodostępnymi schematami akceleratorów medycznych oraz zweryfikowano logiczną poprawność trybów pracy i procedur pod kątem wymagań dla systemów krytycznych (safety-critical).
+Wszystkie informacje wygenerowane przy wsparciu AI zostały poddane ręcznej weryfikacji przez zespół projektowy. Sprawdzono spójność techniczną opisów komponentów z ogólnodostępnymi schematami akceleratorów medycznych oraz zweryfikowano logiczną poprawność trybów pracy i procedur pod kątem wymagań dla systemów krytycznych.
