@@ -72,14 +72,14 @@ Zgodnie z tym założeniem, system składa się z dokładnie 11 głównych kompo
 5. *Konsola operatora (Sprzęt):* Interfejs znajdujący się na zewnątrz bunkra, używany przez technika do inicjowania i monitorowania wiązki.
 6. *Wyłącznik awaryjny E-Stop (Sprzęt):* Fizyczne przyciski (wewnątrz pomieszczenia i na konsoli), które natychmiast odcinają zasilanie wysokiego napięcia.
 7. *Blokada drzwi bunkra (Czujnik):* Wyłącznik bezpieczeństwa, który przerywa obwód bezpieczeństwa w przypadku otwarcia ciężkich drzwi bunkra.
-8. *Kamera monitorująca (Czujnik):* Kamera umieszczona wewnątrz bunkra, która na żywo przesyła obraz we wnętrzu do *Konsoli operatora*, umożliwiając elektroradiologowi podgląd i natychmiastowe zatrzymanie procedury przyciskiem *E-Stop*, gdy pacjent się poruszy.
+8. *Kamera monitorująca (Czujnik):* Kamera umieszczona wewnątrz bunkra, która na żywo przesyła obraz we wnętrzu do *Komputera sterującego*, który wyświetla go na *Konsoli operatora*, umożliwiając elektroradiologowi podgląd i natychmiastowe zatrzymanie procedury przyciskiem *E-Stop*, gdy pacjent się poruszy.
 
 *Elementy mechaniczne:*
 9. *Kolimator - MLC (Mechanika/Sprzęt):* Zestaw ciężkich metalowych "listków" napędzanych silnikami, które dynamicznie kształtują wiązkę promieniowania.
 10. *Stół pacjenta (Mechanika/Sprzęt):* Zrobotyzowana leżanka poruszająca się w wielu osiach w celu precyzyjnego ułożenia pacjenta.
 11. *Silniki pozycjonujące (Mechanika):* Silniki odpowiedzialne za obrót gantry (ciężkiego ramienia utrzymującego akcelerator) wokół stołu z pacjentem.
 
-*Interfejsy:* *Komputer sterujący* pobiera plany z *Bazy danych pacjentów* i wysyła sygnały sterujące do *Akceleratora liniowego* oraz *MLC*. Nieustannie odbiera również sygnały zwrotne z *Detektora dawki promieniowania*. *Konsola operatora* odbiera obraz wideo z *Kamery monitorującej*. Jeśli *Blokada drzwi bunkra* lub wyłącznik *E-Stop* zostaną wyzwolone, sprzętowe zabezpieczenie omija oprogramowanie, fizycznie odcinając zasilanie *Akceleratora liniowego*.
+*Interfejsy:* *Komputer sterujący* pobiera plany z *Bazy danych pacjentów* i wysyła sygnały sterujące do *Akceleratora liniowego* oraz *MLC*. Nieustannie odbiera również sygnały zwrotne z *Detektora dawki promieniowania* i obraz wideo z *Kamery monitorującej*, przekazując go na bieżąco do *Konsoli operatora*. Jeśli *Blokada drzwi bunkra* lub wyłącznik *E-Stop* zostaną wyzwolone, sprzętowe zabezpieczenie omija oprogramowanie, fizycznie odcinając zasilanie *Akceleratora liniowego*.
 
 == Środowisko systemu
 LINAC działa w wysoce kontrolowanym środowisku:
