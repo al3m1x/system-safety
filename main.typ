@@ -55,7 +55,7 @@ Na powyższym schemacie poglądowym widać fizyczną budowę urządzenia, w tym 
 
 Aby umożliwić przejrzystą analizę bezpieczeństwa na poziomie architektury systemu, zrezygnowano z modelowania pojedynczych podzespołów fizycznych na rzecz głównych bloków funkcjonalnych. Wewnętrzne elementy toru terapeutycznego (takie jak działo elektronowe, generator RF, falowód przyspieszający czy magnes zakrzywiający) zostały logicznie połączone i zdefiniowane jako jeden nadrzędny komponent – *Akcelerator liniowy*. Podobnie ciężkie ramy mechaniczne (Gantry, Stand) zostały ujęte funkcjonalnie pod postacią napędzających je *Silników pozycjonujących*. Pozwala to na precyzyjną identyfikację interfejsów bez zbędnego zaciemniania analizy (np. drzew FTA).
 
-Zgodnie z tym założeniem, system składa się z dokładnie 10 głównych komponentów:
+Zgodnie z tym założeniem, system składa się z dokładnie 11 głównych komponentów:
 
 #figure(
   image("LINAC.drawio.png", width: 90%),
@@ -72,13 +72,14 @@ Zgodnie z tym założeniem, system składa się z dokładnie 10 głównych kompo
 5. *Konsola operatora (Sprzęt):* Interfejs znajdujący się na zewnątrz bunkra, używany przez technika do inicjowania i monitorowania wiązki.
 6. *Wyłącznik awaryjny E-Stop (Sprzęt):* Fizyczne przyciski (wewnątrz pomieszczenia i na konsoli), które natychmiast odcinają zasilanie wysokiego napięcia.
 7. *Blokada drzwi bunkra (Czujnik):* Wyłącznik bezpieczeństwa, który przerywa obwód bezpieczeństwa w przypadku otwarcia ciężkich drzwi bunkra.
+8. *Kamera monitorująca (Czujnik):* Kamera umieszczona wewnątrz bunkra, która na żywo przesyła obraz we wnętrzu do *Konsoli operatora*, umożliwiając elektroradiologowi podgląd i natychmiastowe zatrzymanie procedury przyciskiem *E-Stop*, gdy pacjent się poruszy.
 
 *Elementy mechaniczne:*
-8. *Kolimator - MLC (Mechanika/Sprzęt):* Zestaw ciężkich metalowych "listków" napędzanych silnikami, które dynamicznie kształtują wiązkę promieniowania.
-9. *Stół pacjenta (Mechanika/Sprzęt):* Zrobotyzowana leżanka poruszająca się w wielu osiach w celu precyzyjnego ułożenia pacjenta.
-10. *Silniki pozycjonujące (Mechanika):* Silniki odpowiedzialne za obrót gantry (ciężkiego ramienia utrzymującego akcelerator) wokół stołu z pacjentem.
+9. *Kolimator - MLC (Mechanika/Sprzęt):* Zestaw ciężkich metalowych "listków" napędzanych silnikami, które dynamicznie kształtują wiązkę promieniowania.
+10. *Stół pacjenta (Mechanika/Sprzęt):* Zrobotyzowana leżanka poruszająca się w wielu osiach w celu precyzyjnego ułożenia pacjenta.
+11. *Silniki pozycjonujące (Mechanika):* Silniki odpowiedzialne za obrót gantry (ciężkiego ramienia utrzymującego akcelerator) wokół stołu z pacjentem.
 
-*Interfejsy:* *Komputer sterujący* pobiera plany z *Bazy danych pacjentów* i wysyła sygnały sterujące do *Akceleratora liniowego* oraz *MLC*. Nieustannie odbiera również sygnały zwrotne z *Detektora dawki promieniowania*. Jeśli *Blokada drzwi bunkra* lub wyłącznik *E-Stop* zostaną wyzwolone, sprzętowe zabezpieczenie omija oprogramowanie, fizycznie odcinając zasilanie *Akceleratora liniowego*.
+*Interfejsy:* *Komputer sterujący* pobiera plany z *Bazy danych pacjentów* i wysyła sygnały sterujące do *Akceleratora liniowego* oraz *MLC*. Nieustannie odbiera również sygnały zwrotne z *Detektora dawki promieniowania*. *Konsola operatora* odbiera obraz wideo z *Kamery monitorującej*. Jeśli *Blokada drzwi bunkra* lub wyłącznik *E-Stop* zostaną wyzwolone, sprzętowe zabezpieczenie omija oprogramowanie, fizycznie odcinając zasilanie *Akceleratora liniowego*.
 
 == Środowisko systemu
 LINAC działa w wysoce kontrolowanym środowisku:
@@ -95,7 +96,7 @@ LINAC działa w wysoce kontrolowanym środowisku:
 + Przy *Konsoli operatora* na zewnątrz bunkra, elektroradiolog wczytuje plan pacjenta z *Bazy danych pacjentów*.
 + *Komputer sterujący* konfiguruje listki *MLC* w celu ukształtowania wiązki odpowiednio do specyficznego guza.
 + Elektroradiolog naciska przycisk "Beam On" (Włącz wiązkę).
-+ *Akcelerator liniowy* generuje wiązkę, a *Detektor dawki promieniowania* monitoruje podawaną dawkę.
++ *Akcelerator liniowy* generuje wiązkę, a *Detektor dawki promieniowania* monitoruje podawaną dawkę. Podczas naświetlania elektroradiolog uważnie obserwuje pacjenta za pośrednictwem *Kamery monitorującej* na *Konsoli operatora*, mając możliwość natychmiastowego wyłączenia promieniowania przyciskiem stop (*E-Stop*) w przypadku, gdy pacjent zacznie się poruszać.
 + Po osiągnięciu przepisanej dawki, *Komputer sterujący* automatycznie wyłącza wiązkę.
 + Elektroradiolog otwiera drzwi, wchodzi do bunkra i pomaga pacjentowi zejść ze stołu.
 
