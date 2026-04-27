@@ -1,15 +1,19 @@
 #set page(
   paper: "a4",
   margin: (x: 2cm, y: 2.5cm),
-  header: align(right)[
-    #text(8pt, fill: luma(100))[
-      Autorzy: 
-      \ Juliusz Radziszewski s193504
-      \ Adrian Szwaczyk s193233
-      \ Sebastian Kwaśniak s188807
-      \ Maciej Żuralski s193367
-    ]
-  ],
+  header: context {
+    if counter(page).get().first() == 1 {
+      align(right)[
+        #text(8pt, fill: luma(100))[
+          Autorzy: 
+          \ Juliusz Radziszewski s193504
+          \ Adrian Szwaczyk s193233
+          \ Sebastian Kwaśniak s188807
+          \ Maciej Żuralski s193367
+        ]
+      ]
+    }
+  },
   footer: context {
     align(right)[
       #text(9pt)[Strona #counter(page).display()]
