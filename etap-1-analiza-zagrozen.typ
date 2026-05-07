@@ -1,15 +1,18 @@
 #set page(
   paper: "a4",
-  margin: (x: 1.8cm, y: 2.2cm),
+  margin: (x: 1.8cm, y: 2.5cm),
+  header-ascent: 0pt,
   header: context {
     if counter(page).get().first() == 1 {
       align(right)[
-        #text(8pt, fill: luma(100))[
-          Autorzy:
-          \ Juliusz Radziszewski s193504
-          \ Adrian Szwaczyk s193233
-          \ Sebastian Kwaśniak s188807
-          \ Maciej Żuralski s193367
+        #pad(top: 0.35cm)[
+          #text(8pt, fill: luma(100))[
+            Autorzy:
+            \ Juliusz Radziszewski s193504
+            \ Adrian Szwaczyk s193233
+            \ Sebastian Kwaśniak s188807
+            \ Maciej Żuralski s193367
+          ]
         ]
       ]
     }
@@ -234,6 +237,12 @@ Najważniejsze zalecane kierunki redukcji ryzyka to:
 - okresowe testy E-Stop, blokady drzwi, krańcówek, enkoderów i toru monitoringu wideo,
 - procedury kontroli energii resztkowej podczas prac serwisowych.
 
-= Wykorzystanie AI
+= Wykorzystanie AI (AI usage)
 
-Narzędzie AI zostało wykorzystane do przeglądu zgodności dokumentu z instrukcją `Project Task 1 Guidelines - Track 1.pdf`, uporządkowania listy hazardów, dopracowania drzew FTA oraz sprawdzenia spójności z opisem systemu w `main.typ`. Wyniki zostały sformułowane jako jakościowa analiza projektowa i wymagają przeglądu zespołu pod kątem zgodności z ustaleniami przyjętymi na zajęciach.
+Zgodnie z wytycznymi projektu, poniżej przedstawiono zakres wykorzystania narzędzi sztucznej inteligencji w procesie przygotowania raportu:
+
+a) *Zakres wykorzystania:*
+Sztuczna inteligencja została wykorzystana jako wsparcie przy porządkowaniu listy hazardów, dopracowaniu opisów przyczyn i konsekwencji oraz przygotowaniu jakościowej analizy FTA dla wybranych zagrożeń. Narzędzia AI pomogły również w sprawdzeniu spójności dokumentu z opisem systemu w `main.typ`, ujednoliceniu terminologii dotyczącej komponentów LINAC oraz ogólnym formatowaniu raportu w języku Typst.
+
+b) *Weryfikacja wyników:*
+Wszystkie informacje przygotowane przy wsparciu AI zostały poddane ręcznej weryfikacji przez zespół projektowy. Sprawdzono, czy hazardy odnoszą się do komponentów i trybów pracy przyjętych w opisie systemu, czy nie są mylone z bezpośrednimi skutkami wypadkowymi oraz czy drzewa FTA zachowują logiczną zgodność z przyjętymi założeniami analizy bezpieczeństwa.
