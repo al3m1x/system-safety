@@ -78,10 +78,10 @@ Analiza obejmuje tryby pracy zdefiniowane w opisie systemu: tryb gotowości, poz
 #table(
   columns: (2.7cm, 10.8cm),
   table.header([*Poziom*], [*Znaczenie prawdopodobieństwa*]),
-  [High], [Zdarzenie może wystąpić wielokrotnie w okresie eksploatacji systemu lub jest silnie zależne od typowych błędów operacyjnych.],
-  [Medium], [Zdarzenie jest możliwe przy pojedynczej awarii, błędzie konfiguracji lub nieprawidłowym działaniu procedury.],
-  [Low], [Zdarzenie wymaga zbiegu kilku awarii lub błędów, ale pozostaje wiarygodne w praktyce eksploatacyjnej.],
-  [Marginal], [Zdarzenie wymaga rzadkiego zbiegu wielu niesprawności, obejść zabezpieczeń lub skrajnego naruszenia procedur.]
+  [Wysoki], [Zdarzenie może wystąpić wielokrotnie w okresie eksploatacji systemu lub jest silnie zależne od typowych błędów operacyjnych.],
+  [Średni], [Zdarzenie jest możliwe przy pojedynczej awarii, błędzie konfiguracji lub nieprawidłowym działaniu procedury.],
+  [Niski], [Zdarzenie wymaga zbiegu kilku awarii lub błędów, ale pozostaje wiarygodne w praktyce eksploatacyjnej.],
+  [Marginalne], [Zdarzenie wymaga rzadkiego zbiegu wielu niesprawności, obejść zabezpieczeń lub skrajnego naruszenia procedur.]
 )
 
 #v(0.8em)
@@ -89,10 +89,10 @@ Analiza obejmuje tryby pracy zdefiniowane w opisie systemu: tryb gotowości, poz
 #table(
   columns: (2.7cm, 10.8cm),
   table.header([*Poziom*], [*Znaczenie ciężkości skutków*]),
-  [Critical], [Śmierć pacjenta lub osoby z personelu, trwałe ciężkie obrażenia, bardzo poważne skutki radiacyjne.],
-  [Serious], [Ciężkie obrażenia, istotne pogorszenie rokowania pacjenta, duże szkody materialne lub długotrwałe przerwanie leczenia.],
-  [Moderate], [Przejściowy wpływ na zdrowie pacjenta, umiarkowane szkody, konieczność powtórzenia procedury lub dodatkowej diagnostyki.],
-  [Marginal], [Drobne szkody, brak istotnego wpływu na zdrowie pacjenta, lokalne zakłócenie pracy.]
+  [Krytyczny], [Śmierć pacjenta lub osoby z personelu, trwałe ciężkie obrażenia, bardzo poważne skutki radiacyjne.],
+  [Poważny], [Ciężkie obrażenia, istotne pogorszenie rokowania pacjenta, duże szkody materialne lub długotrwałe przerwanie leczenia.],
+  [Umiarkowany], [Przejściowy wpływ na zdrowie pacjenta, umiarkowane szkody, konieczność powtórzenia procedury lub dodatkowej diagnostyki.],
+  [Marginalny], [Drobne szkody, brak istotnego wpływu na zdrowie pacjenta, lokalne zakłócenie pracy.]
 )
 
 = Identyfikacja zagrożeń
@@ -101,10 +101,10 @@ Zgodnie z instrukcją etapu zidentyfikowano 10 hazardów, czyli nie przekroczono
 
 #text(size: 8.3pt)[
 #table(
-  columns: (0.9cm, 2.75cm, 4.05cm, 4.05cm, 1.55cm, 1.55cm, 1.55cm),
+  columns: (0.9cm, 2.7cm, 3.8cm, 4.1cm, 1.7cm, 1.55cm, 1.55cm),
   align: (center, left, left, left, center, center, center),
   table.header(
-    [*Id*], [*Hazard name*], [*Main causes*], [*Consequences*], [*Likelihood*], [*Severity*], [*Criticality*],
+    [*Id*], [*Nazwa hazardu*], [*Główny czynnik*], [*Konsekwencje*], [*Prawdopodo-\ bieństwo*], [*Ciężkość*], [*Krytyczność*],
   ),
   [H-01], [Nadmierna dawka promieniowania], [Błąd licznika MU w komputerze sterującym, zaniżony odczyt detektora dawki, zablokowany przekaźnik wysokiego napięcia, niepoprawna wartość dawki w planie.], [Oparzenia popromienne, martwica tkanek, poważne uszkodzenie narządów lub śmierć pacjenta.], [Low], [Critical], crit("High"),
   [H-02], [Zbyt niska dawka terapeutyczna], [Przedwczesne wyłączenie wiązki, awaria akceleratora, błędna kalibracja dawki, niepełne wykonanie frakcji lub błędna wartość dawki w planie.], [Nieskuteczne leczenie nowotworu, progresja choroby, konieczność powtórzenia terapii.], [Low], [Serious], crit("Medium"),
