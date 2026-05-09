@@ -95,9 +95,37 @@ Analiza obejmuje tryby pracy zdefiniowane w opisie systemu: tryb gotowości, poz
   [Marginalny], [Drobne szkody, brak istotnego wpływu na zdrowie pacjenta, lokalne zakłócenie pracy.]
 )
 
+= Macierz ryzyka
+
+Przyjęto następującą jakościową macierz krytyczności. W każdej komórce podano najpierw poziom ryzyka, a następnie identyfikatory hazardów z danej klasy.
+
+#table(
+  columns: (auto, 2.4cm, 3cm, 3cm, 3cm, 3cm),
+  align: center + horizon,
+  table.cell(colspan: 2, rowspan: 2, stroke: none)[],
+  table.cell(colspan: 4, fill: luma(230))[*Ciężkość*],
+  table.cell(fill: luma(245))[*Marginalny*], 
+  table.cell(fill: luma(245))[*Umiarkowany*], 
+  table.cell(fill: luma(245))[*Poważny*], 
+  table.cell(fill: luma(245))[*Krytyczny*],
+  table.cell(rowspan: 4, fill: luma(230))[
+    #rotate(-90deg, reflow: true)[*Prawdopodobieństwo*]
+  ],
+  table.cell(fill: luma(245))[*Wysoki*],
+  crit("Średnie"), crit("Wysokie"), crit("Wysokie"), crit("Wysokie"),
+  table.cell(fill: luma(245))[*Średni*],
+  crit("Niskie"), crit("Średnie"), table.cell(fill: hazard-color("Wysokie"))[*Wysoki* \ H-05, H-07], crit("Wysokie"),
+  table.cell(fill: luma(245))[*Niski*],
+  crit("Niskie"), crit("Niskie"), table.cell(fill: hazard-color("Średnie"))[*Średnie* \ H-02], table.cell(fill: hazard-color("Wysokie"))[*Wysokie* \ H-01, H-03, H-06, H-09, H-10],
+  table.cell(fill: luma(245))[*Marginalne*],
+  crit("Marginalne"), crit("Niskie"), crit("Niskie"), table.cell(fill: hazard-color("Średnie"))[*Średni* \ H-04, H-08],
+)
+
+#v(1em)
+
 = Identyfikacja zagrożeń
 
-Zgodnie z instrukcją etapu zidentyfikowano 10 hazardów, czyli nie przekroczono górnego limitu. Definicje utrzymano na podobnym poziomie szczegółowości: każdy hazard opisuje stan systemu lub sytuację operacyjną, a nie pojedynczą przyczynę ani samą konsekwencję.
+W ramach analizy zidentyfikowano 10 głównych hazardów. Definicje utrzymano na podobnym poziomie szczegółowości: każdy hazard opisuje stan systemu lub sytuację operacyjną, a nie pojedynczą przyczynę ani samą konsekwencję.
 
 #text(size: 8.3pt)[
 #table(
@@ -114,14 +142,14 @@ Zgodnie z instrukcją etapu zidentyfikowano 10 hazardów, czyli nie przekroczono
   [H-06], [Nieprawidłowy kształt pola promieniowania], [Zacięcie listków MLC, błąd sterowania MLC, utrata informacji zwrotnej o pozycji listków, użycie niewłaściwej konfiguracji pola.], [Napromienienie zdrowych tkanek, niedostateczna dawka w części guza lub uszkodzenie narządu krytycznego.], [Niskie], [Krytyczna], crit("Wysokie"),
   [H-07], [Brak skutecznego monitorowania pacjenta podczas emisji], [Awaria kamery, zamrożenie obrazu na konsoli, opóźnienie transmisji, nieuwaga operatora, brak alarmu utraty wideo.], [Ruch pacjenta lub pogorszenie stanu nie zostają wykryte, co może prowadzić do błędnej ekspozycji albo opóźnienia reakcji.], [Średnie], [Poważna], crit("Wysokie"),
   [H-08], [Emisja wiązki w niewłaściwym trybie pracy], [Błąd logiki trybów, pozostawiony tryb kalibracji, obejście kontroli dostępu, użycie planu QA przy obecnym pacjencie.], [Nieautoryzowana lub niekontrolowana emisja promieniowania poza zatwierdzoną procedurą terapeutyczną.], [Marginalne], [Krytyczna], crit("Średnie"),
-  [H-09], [Wczytanie niewłaściwego planu pacjenta], [Błędna identyfikacja pacjenta, pomyłka w bazie danych, niezatwierdzona wersja planu, nieskuteczna weryfikacja na konsoli.], [Podanie dawki i geometrii leczenia przeznaczonej dla innego pacjenta lub innej frakcji.], [Niskie], [Krytyczna], crit("Wysokie"),
-  [H-10], [Porażenie elektryczne personelu serwisowego], [Kontakt z obwodami wysokiego napięcia, brak rozładowania kondensatorów, obejście blokad serwisowych, uszkodzona izolacja.], [Ciężkie obrażenia elektryczne lub śmierć technika serwisowego.], [Marginalne], [Krytyczna], crit("Średnie"),
+  [H-09], [Nieskuteczne zatrzymanie awaryjne], [Awaria przycisku E-Stop, zablokowany obwód odcięcia zasilania, awaria przekaźnika bezpieczeństwa.], [System nie przerywa emisji promieniowania lub ruchu mimo wyzwolenia E-Stop, eskalacja wypadku.], [Niskie], [Krytyczna], crit("Wysokie"),
+  [H-10], [Wczytanie niewłaściwego planu pacjenta], [Błędna identyfikacja pacjenta, pomyłka w bazie danych, niezatwierdzona wersja planu, nieskuteczna weryfikacja na konsoli.], [Podanie dawki i geometrii leczenia przeznaczonej dla innego pacjenta lub innej frakcji.], [Niskie], [Krytyczna], crit("Wysokie"),
 )
 ]
 
 = Wybrane zagrożenia do analizy FTA
 
-Zespół projektowy liczy 4 osoby, dlatego zgodnie z wymaganiem przeanalizowano 8 zagrożeń: H-01, H-03, H-04, H-05, H-07, H-08, H-09 oraz H-10. Dobór obejmuje różne klasy zagrożeń: radiacyjne, mechaniczne, programowe, ludzkie, środowiskowo-organizacyjne i elektryczne.
+Zidentyfikowane zagrożenia poddano selekcji i do dalszej analizy wybrano 7 z nich: H-01, H-03, H-05, H-06, H-07, H-09 oraz H-10. Dobór obejmuje różne klasy zagrożeń: radiacyjne, mechaniczne, programowe, ludzkie, środowiskowo-organizacyjne i elektryczne.
 
 W drzewach FTA zastosowano następujące oznaczenia:
 - `OR` oznacza, że wystarczy jedno zdarzenie podrzędne.
@@ -182,60 +210,14 @@ H-07 nie musi bezpośrednio oznaczać wypadku, ale usuwa istotną warstwę detek
 
 H-09 jest krytyczny, bo E-Stop stanowi ostatnią barierę dla hazardów radiacyjnych i mechanicznych. Drzewo rozróżnia awarię samego przycisku, awarię toru odcięcia energii oraz błędne przywrócenie systemu do pracy.
 
-== FTA H-13: Wczytanie niewłaściwego planu pacjenta
+== FTA H-10: Wczytanie niewłaściwego planu pacjenta
 
 #figure(
-  image("figures/fta-h13.jpg", width: 100%),
-  caption: [Drzewo FTA dla H-13],
+  image("figures/fta-h10.jpg", width: 100%),
+  caption: [Drzewo FTA dla H-10],
 )
 
 #pagebreak()
-
-= Macierz ryzyka
-
-Przyjęto następującą jakościową macierz krytyczności. W każdej komórce podano najpierw poziom ryzyka, a następnie identyfikatory hazardów z danej klasy.
-
-#table(
-  columns: (auto, 2.4cm, 3cm, 3cm, 3cm, 3cm),
-  align: center + horizon,
-  table.cell(colspan: 2, rowspan: 2, stroke: none)[],
-  table.cell(colspan: 4, fill: luma(230))[*Ciężkość*],
-  table.cell(fill: luma(245))[*Marginalny*], 
-  table.cell(fill: luma(245))[*Umiarkowany*], 
-  table.cell(fill: luma(245))[*Poważny*], 
-  table.cell(fill: luma(245))[*Krytyczny*],
-  table.cell(rowspan: 4, fill: luma(230))[
-    #rotate(-90deg, reflow: true)[*Prawdopodobieństwo*]
-  ],
-  table.cell(fill: luma(245))[*Wysoki*],
-  crit("Średnie"), crit("Wysokie"), crit("Wysokie"), crit("Wysokie"),
-  table.cell(fill: luma(245))[*Średni*],
-  crit("Niskie"), crit("Średnie"), table.cell(fill: hazard-color("Wysokie"))[*Wysoki* \ H-05, H-07], crit("Wysokie"),
-  table.cell(fill: luma(245))[*Niski*],
-  crit("Niskie"), crit("Niskie"), table.cell(fill: hazard-color("Średnie"))[*Średnie* \ H-02], table.cell(fill: hazard-color("Wysokie"))[*Wysokie* \ H-01, H-03, H-06, H-09, H-13],
-  table.cell(fill: luma(245))[*Marginalne*],
-  crit("Marginalne"), crit("Niskie"), crit("Niskie"), table.cell(fill: hazard-color("Średnie"))[*Średni* \ H-04, H-08],
-)
-
-#v(1em)
-
-#text(size: 8.8pt)[
-#table(
-  columns: (1.1cm, 3.45cm, 1.8cm, 1.8cm, 1.8cm, 5.45cm),
-  align: (center, left, center, center, center, left),
-  table.header([*Id*], [*Hazard*], [*Prawdopo- \ dobieństwo*], [*Ciężkość*], [*Ryzyko*], [*Uzasadnienie oceny*]),
-  [H-01], [Nadmierna dawka promieniowania], [Niskie], [Krytyczna], crit("Wysokie"), [Wymaga awarii kontroli dawki, ale skutki radiacyjne są potencjalnie śmiertelne.],
-  [H-02], [Zbyt niska dawka terapeutyczna], [Niskie], [Poważne], crit("Średnie"), [Skutki są poważne, ale zwykle ujawniają się przez brak skuteczności leczenia, a nie przez natychmiastowy uraz.],
-  [H-03], [Napromienienie niewłaściwego obszaru], [Niskie], [Krytyczna], crit("Wysokie"), [Błąd geometrii lub danych może bezpośrednio uszkodzić zdrowe narządy.],
-  [H-04], [Osoba w bunkrze podczas emisji], [Marginalne], [Krytyczna], crit("Średnie"), [Wymaga naruszenia procedur i nieskutecznej blokady, ale skutki ekspozycji są krytyczne.],
-  [H-05], [Kolizja gantry lub stołu], [Średnie], [Poważne], crit("Wysokie"), [Ruch mechaniczny występuje rutynowo w setupie; urazy mogą być ciężkie.],
-  [H-06], [Nieprawidłowy kształt pola], [Niskie], [Krytyczna], crit("Wysokie"), [Błąd MLC może napromienić narządy krytyczne mimo poprawnego ułożenia pacjenta.],
-  [H-07], [Brak monitorowania pacjenta], [Średnie], [Poważna], crit("Wysokie"), [Awaria monitoringu jest wiarygodna i usuwa ważną warstwę detekcji incydentu.],
-  [H-08], [Emisja w niewłaściwym trybie], [Marginalne], [Krytyczna], crit("Średnie"), [Wymaga błędu trybów lub obejścia, ale może prowadzić do niekontrolowanej ekspozycji.],
-  [H-09], [Nieskuteczne zatrzymanie awaryjne], [Niskie], [Krytyczna], crit("Wysokie"), [E-Stop jest ostatnią barierą dla emisji i ruchu; jego nieskuteczność może być śmiertelna.],
-  [H-13], [Wczytanie niewłaściwego planu], [Niskie], [Krytyczna], crit("Wysokie"), [Błąd identyfikacji lub danych wpływa jednocześnie na dawkę, geometrię i konfigurację MLC.],
-)
-]
 
 = Wnioski
 
@@ -251,7 +233,7 @@ Najważniejsze zalecane kierunki redukcji ryzyka to:
 
 = Wykorzystanie AI (AI usage)
 
-Zgodnie z wytycznymi projektu, poniżej przedstawiono zakres wykorzystania narzędzi sztucznej inteligencji w procesie przygotowania raportu:
+Poniżej przedstawiono zakres wykorzystania narzędzi sztucznej inteligencji w procesie przygotowania raportu:
 
 a) *Zakres wykorzystania:*
 Sztuczna inteligencja została wykorzystana jako wsparcie przy porządkowaniu listy hazardów, dopracowaniu opisów przyczyn i konsekwencji oraz przygotowaniu jakościowej analizy FTA dla wybranych zagrożeń. Narzędzia AI pomogły również w sprawdzeniu spójności dokumentu z opisem systemu w `main.typ`, ujednoliceniu terminologii dotyczącej komponentów LINAC oraz ogólnym formatowaniu raportu w języku Typst.

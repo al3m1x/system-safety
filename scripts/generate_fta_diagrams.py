@@ -5,11 +5,17 @@ import textwrap
 from PIL import Image, ImageDraw, ImageFont
 
 
+import platform
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "figures"
 
-FONT = "/System/Library/Fonts/Supplemental/Arial.ttf"
-BOLD = "/System/Library/Fonts/Supplemental/Arial Bold.ttf"
+if platform.system() == "Windows":
+    FONT = "C:/Windows/Fonts/arial.ttf"
+    BOLD = "C:/Windows/Fonts/arialbd.ttf"
+else:
+    FONT = "/System/Library/Fonts/Supplemental/Arial.ttf"
+    BOLD = "/System/Library/Fonts/Supplemental/Arial Bold.ttf"
 
 
 TREES = {
@@ -152,26 +158,26 @@ TREES = {
             ]),
         ],
     },
-    "h13": {
-        "top": ("H-13 TOP", "Do leczenia zostaje użyty plan nieodpowiadający aktualnemu pacjentowi"),
+    "h10": {
+        "top": ("H-10 TOP", "Do leczenia zostaje użyty plan nieodpowiadający aktualnemu pacjentowi"),
         "gate": "OR",
         "branches": [
-            ("G-H13-A", "System wybiera lub prezentuje błędny rekord z bazy danych pacjentów", "OR", [
-                ("BE-H13-01", "Zapytanie do bazy danych zwraca rekord o podobnym imieniu i nazwisku"),
-                ("BE-H13-02", "Replikacja bazy danych jest opóźniona i udostępnia starszą wersję planu"),
-                ("BE-H13-03", "Błąd mapowania identyfikatora pacjenta na identyfikator planu"),
-                ("BE-H13-04", "Suma kontrolna lub podpis planu nie są weryfikowane przy wczytaniu"),
+            ("G-H10-A", "System wybiera lub prezentuje błędny rekord z bazy danych pacjentów", "OR", [
+                ("BE-H10-01", "Zapytanie do bazy danych zwraca rekord o podobnym imieniu i nazwisku"),
+                ("BE-H10-02", "Replikacja bazy danych jest opóźniona i udostępnia starszą wersję planu"),
+                ("BE-H10-03", "Błąd mapowania identyfikatora pacjenta na identyfikator planu"),
+                ("BE-H10-04", "Suma kontrolna lub podpis planu nie są weryfikowane przy wczytaniu"),
             ]),
-            ("G-H13-B", "Operator zatwierdza niewłaściwy plan na konsoli", "OR", [
-                ("BE-H13-05", "Skaner identyfikatora pacjenta nie działa i użyto ręcznego wyboru"),
-                ("BE-H13-06", "Konsola obcina długi identyfikator lub nazwę planu"),
-                ("BE-H13-07", "Operator pomija procedurę time-out przed Beam On"),
-                ("BE-H13-08", "Dwie zaplanowane frakcje mają podobne nazwy i daty"),
+            ("G-H10-B", "Operator zatwierdza niewłaściwy plan na konsoli", "OR", [
+                ("BE-H10-05", "Skaner identyfikatora pacjenta nie działa i użyto ręcznego wyboru"),
+                ("BE-H10-06", "Konsola obcina długi identyfikator lub nazwę planu"),
+                ("BE-H10-07", "Operator pomija procedurę time-out przed Beam On"),
+                ("BE-H10-08", "Dwie zaplanowane frakcje mają podobne nazwy i daty"),
             ]),
-            ("G-H13-C", "Nieaktualna lub niezatwierdzona wersja planu trafia do leczenia", "OR", [
-                ("BE-H13-09", "Lekarz/fizyk nie zatwierdził finalnej wersji planu w systemie"),
-                ("BE-H13-10", "Komputer sterujący nie blokuje planu o statusie roboczym"),
-                ("BE-H13-11", "Awaria sieci powoduje użycie lokalnej kopii planu bez walidacji"),
+            ("G-H10-C", "Nieaktualna lub niezatwierdzona wersja planu trafia do leczenia", "OR", [
+                ("BE-H10-09", "Lekarz/fizyk nie zatwierdził finalnej wersji planu w systemie"),
+                ("BE-H10-10", "Komputer sterujący nie blokuje planu o statusie roboczym"),
+                ("BE-H10-11", "Awaria sieci powoduje użycie lokalnej kopii planu bez walidacji"),
             ]),
         ],
     },
