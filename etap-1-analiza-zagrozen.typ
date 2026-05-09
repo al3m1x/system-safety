@@ -236,7 +236,7 @@ Najważniejsze zalecane kierunki redukcji ryzyka to:
 Poniżej przedstawiono zakres wykorzystania narzędzi sztucznej inteligencji w procesie przygotowania raportu:
 
 a) *Zakres wykorzystania:*
-Sztuczna inteligencja została wykorzystana jako wsparcie przy porządkowaniu listy hazardów, dopracowaniu opisów przyczyn i konsekwencji oraz przygotowaniu jakościowej analizy FTA dla wybranych zagrożeń. Narzędzia AI pomogły również w sprawdzeniu spójności dokumentu z opisem systemu w `main.typ`, ujednoliceniu terminologii dotyczącej komponentów LINAC oraz ogólnym formatowaniu raportu w języku Typst.
+Sztuczna inteligencja została wykorzystana jako wsparcie w zakresie specjalistycznej wiedzy medycznej dotyczącej radioterapii, przy porządkowaniu listy hazardów, dopracowaniu opisów przyczyn i konsekwencji oraz przygotowaniu jakościowej analizy FTA dla wybranych zagrożeń. Narzędzia AI pomogły również w sprawdzeniu spójności dokumentu z opisem systemu, ujednoliceniu terminologii dotyczącej komponentów LINAC oraz ogólnym formatowaniu raportu w języku Typst.
 
 b) *Weryfikacja wyników:*
 Wszystkie informacje przygotowane przy wsparciu AI zostały poddane ręcznej weryfikacji przez zespół projektowy. Sprawdzono, czy hazardy odnoszą się do komponentów i trybów pracy przyjętych w opisie systemu, czy nie są mylone z bezpośrednimi skutkami wypadkowymi oraz czy drzewa FTA zachowują logiczną zgodność z przyjętymi założeniami analizy bezpieczeństwa.
