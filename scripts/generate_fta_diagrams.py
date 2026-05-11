@@ -34,7 +34,7 @@ TREES = {
                 ("BE-H01-06", "Detektor dawki traci kalibrację z powodu awarii pomiarowej"),
                 ("BE-H01-07", "Komputer sterujący błędnie interpretuje sygnał z Detektora"),
             ]),
-            ("G-H01-C", "Brak reakcji na stanowisku operatorskim", "AND", [
+            ("G-H01-C", "Brak reakcji na stanowisku operatorskim", "OR", [
                 ("BE-H01-08", "Konsola operatora ulega awarii i nie wyświetla stanu dawki"),
                 ("BE-H01-09", "Wyłącznik awaryjny (E-Stop) blokuje się w pozycji zwartej"),
             ]),
@@ -79,19 +79,22 @@ TREES = {
         ],
     },
     "h06": { 
-        "top": ("H-06 TOP", "Pole promieniowania ma kształt inny niż zapisany w planie"),
-        "gate": "OR",
+        "top": ("H-06 TOP", "Napromienienie pacjenta polem o błędnym kształcie"),
+        "gate": "AND", # <-- KLUCZOWA ZMIANA Z OR NA AND
         "branches": [
-            ("G-H06-A", "Fizyczna awaria sprzętu kształtującego", "OR", [
-                ("BE-H06-01", "Kolimator (MLC) fizycznie blokuje listki w błędnej pozycji"),
-                ("BE-H06-02", "Kolimator (MLC) wysyła fałszywą informację zwrotną o swojej pozycji"),
+            ("G-H06-AB", "Fizyczne lub programowe wygenerowanie złego kształtu", "OR", [
+                # Dawne gałęzie A i B, teraz zagnieżdżone jako przyczyny:
+                ("G-H06-A", "Fizyczna awaria sprzętu kształtującego", "OR", [
+                    ("BE-H06-01", "Kolimator (MLC) fizycznie blokuje listki w błędnej pozycji"),
+                    ("BE-H06-02", "Kolimator (MLC) wysyła fałszywą informację zwrotną o swojej pozycji"),
+                ]),
+                ("G-H06-B", "Błąd sterowania lub wizualizacji kształtu", "OR", [
+                    ("BE-H06-03", "Baza danych pacjentów wysyła przestarzałą sekwencję listków"),
+                    ("BE-H06-04", "Komputer sterujący generuje błędne sygnały sterujące dla MLC"),
+                    ("BE-H06-05", "Komputer sterujący gubi synchronizację ruchu MLC z dawką"),
+                ]),
             ]),
-            ("G-H06-B", "Błąd sterowania lub wizualizacji kształtu", "OR", [
-                ("BE-H06-03", "Baza danych pacjentów wysyła przestarzałą sekwencję listków"),
-                ("BE-H06-04", "Komputer sterujący generuje błędne sygnały sterujące dla MLC"),
-                ("BE-H06-05", "Komputer sterujący gubi synchronizację ruchu MLC z dawką"),
-            ]),
-            ("G-H06-C", "Brak reakcji na zaistniałą niezgodność", "AND", [
+            ("G-H06-C", "Brak reakcji na zaistniałą niezgodność", "AND", [ # <-- Twoja dawna gałąź C
                 ("BE-H06-06", "Konsola operatora nie wyświetla alarmu o błędzie kształtu"),
                 ("BE-H06-07", "Elektroradiolog akceptuje błędny zarys pola na Konsoli operatora"),
             ]),
@@ -118,17 +121,17 @@ TREES = {
         "top": ("H-08 TOP", "Emisja wiązki promieniowania w niewłaściwym trybie pracy"),
         "gate": "OR",
         "branches": [
-            ("G-H08-A", "Emisja przy obecności personelu w bunkrze", "AND", [
+            ("G-H08-A", "Emisja przy obecności personelu w bunkrze", "OR", [ # ZMIANA NA OR
                 ("BE-H08-01", "Blokada drzwi bunkra nie sygnalizuje otwarcia do Komputera"),
                 ("BE-H08-02", "Elektroradiolog celowo omija zabezpieczenia z poziomu Konsoli"),
                 ("BE-H08-03", "Komputer sterujący zezwala na emisję mimo braku sygnału z Blokady"),
             ]),
-            ("G-H08-B", "Błędny tryb terapeutyczny zamiast serwisowego", "AND", [
+            ("G-H08-B", "Błędny tryb terapeutyczny zamiast serwisowego", "OR", [ # ZMIANA NA OR
                 ("BE-H08-04", "Fizyk medyczny pozostawia Komputer sterujący w trybie serwisowym"),
                 ("BE-H08-05", "Baza danych pacjentów podmienia plan terapeutyczny na kalibracyjny"),
                 ("BE-H08-06", "Komputer sterujący ignoruje zabezpieczenia trybu klinicznego"),
             ]),
-            ("G-H08-C", "Emisja w Trybie gotowości (Idle)", "AND", [
+            ("G-H08-C", "Emisja w Trybie gotowości (Idle)", "OR", [ # ZMIANA NA OR
                 ("BE-H08-07", "Akcelerator liniowy ulega awarii i generuje wiązkę spontanicznie"),
                 ("BE-H08-08", "Komputer sterujący błędnie interpretuje stan jako gotowy do emisji"),
             ]),
