@@ -220,7 +220,7 @@ H-07 nie musi bezpośrednio oznaczać wypadku, ale usuwa istotną warstwę detek
   caption: [Drzewo FTA dla H-08],
 )
 
-Zagrożenie H-08 uwzględnia naruszenie logiki stanów maszyny (np. emisja podczas pozycjonowania lub kalibracji QA). Kluczowe jest tu prawidłowe działanie sprzętowych blokad drzwi, bazy danych pacjentów oraz właściwej interpretacji flag trybów przez główny komputer sterujący.
+Zagrożenie H-08 uwzględnia naruszenie logiki stanów maszyny (np. emisja podczas pozycjonowania, w trybie gotowości albo przy błędnym kontekście QA). Kluczowe jest tu prawidłowe działanie blokady drzwi, separacji trybów QA/serwis/Treatment oraz warunków dopuszczenia Beam On przez komputer sterujący i akcelerator liniowy.
 
 == FTA H-09: Nieskuteczne zatrzymanie awaryjne
 
@@ -229,7 +229,7 @@ Zagrożenie H-08 uwzględnia naruszenie logiki stanów maszyny (np. emisja podcz
   caption: [Drzewo FTA dla H-09],
 )
 
-H-09 jest krytyczny, bo E-Stop stanowi ostatnią barierę dla hazardów radiacyjnych i mechanicznych. Drzewo rozróżnia awarię samego przycisku, awarię toru odcięcia energii oraz błędne przywrócenie systemu do pracy.
+H-09 jest krytyczny, bo E-Stop stanowi ostatnią barierę dla hazardów radiacyjnych i mechanicznych. Drzewo rozróżnia brak skutecznej aktywacji E-Stop, awarię toru odcięcia energii oraz brak przejścia elementów wykonawczych do stanu bezpiecznego.
 
 == FTA H-10: Wczytanie niewłaściwego planu pacjenta
 

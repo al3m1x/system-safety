@@ -47,10 +47,10 @@ TREES = {
         "gate": "OR",
         "branches": [
             ("G-H03-A", "Błędne ułożenie mechaniczne", "OR", [
-                ("BE-H03-01", "System laserów pozycjonujących rzuca przesunięte izocentrum"),
+                ("BE-H03-01", "Stół pacjenta lub Silniki pozycjonujące ustawiają izocentrum poza zadanymi współrzędnymi"),
                 ("BE-H03-02", "Stół pacjenta przemieszcza się do błędnych współrzędnych"),
                 ("BE-H03-03", "Silniki pozycjonujące obracają maszynę pod błędnym kątem"),
-                ("BE-H03-04", "Elektroradiolog układa pacjenta niezgodnie ze znacznikami laserów"),
+                ("BE-H03-04", "Elektroradiolog ustawia pacjenta niezgodnie z referencjami pozycjonowania"),
             ]),
             ("G-H03-B", "Niewłaściwe dane geometryczne w systemie", "OR", [
                 ("BE-H03-05", "Baza danych pacjentów dostarcza uszkodzony plik planu"),
@@ -71,7 +71,7 @@ TREES = {
                 ("BE-H05-01", "Komputer sterujący wysyła błędny wektor ruchu zagrażający kolizją"),
                 ("BE-H05-02", "Silniki pozycjonujące ignorują sprzętowy sygnał zatrzymania"),
                 ("BE-H05-03", "Stół pacjenta przemieszcza się samoczynnie wskutek własnej awarii"),
-                ("BE-H05-04", "Utrata zasilania z Sieci powoduje swobodny opad elementów maszyny"),
+                ("BE-H05-04", "Zewnętrzna utrata zasilania jako czynnik środowiskowy powoduje swobodny opad elementów maszyny"),
             ]),
             ("G-H05-B", "Błąd w trybie sterowania ręcznego", "AND", [
                 ("BE-H05-05", "Elektroradiolog na Konsoli wymusza ruch o zbyt dużym skoku"),
@@ -82,10 +82,9 @@ TREES = {
     },
     "h06": { 
         "top": ("H-06 TOP", "Napromienienie pacjenta polem o błędnym kształcie"),
-        "gate": "AND", # <-- KLUCZOWA ZMIANA Z OR NA AND
+        "gate": "AND",
         "branches": [
             ("G-H06-AB", "Fizyczne lub programowe wygenerowanie złego kształtu", "OR", [
-                # Dawne gałęzie A i B, teraz zagnieżdżone jako przyczyny:
                 ("G-H06-A", "Fizyczna awaria sprzętu kształtującego", "OR", [
                     ("BE-H06-01", "Kolimator (MLC) fizycznie blokuje listki w błędnej pozycji"),
                     ("BE-H06-02", "Kolimator (MLC) wysyła fałszywą informację zwrotną o swojej pozycji"),
@@ -96,7 +95,7 @@ TREES = {
                     ("BE-H06-05", "Komputer sterujący gubi synchronizację ruchu MLC z dawką"),
                 ]),
             ]),
-            ("G-H06-C", "Brak reakcji na zaistniałą niezgodność", "AND", [ # <-- Twoja dawna gałąź C
+            ("G-H06-C", "Brak reakcji na zaistniałą niezgodność", "OR", [
                 ("BE-H06-06", "Konsola operatora nie wyświetla alarmu o błędzie kształtu"),
                 ("BE-H06-07", "Elektroradiolog akceptuje błędny zarys pola na Konsoli operatora"),
             ]),
@@ -108,7 +107,7 @@ TREES = {
         "branches": [
             ("G-H07-A", "Brak obrazu wideo z wnętrza bunkra", "OR", [
                 ("BE-H07-01", "Kamera monitorująca ulega awarii sprzętowej lub traci zasilanie"),
-                ("BE-H07-02", "Awaria Sieci zasilającej powoduje zgaśnięcie oświetlenia w bunkrze"),
+                ("BE-H07-02", "Zewnętrzna utrata zasilania jako czynnik środowiskowy powoduje zgaśnięcie oświetlenia w bunkrze"),
                 ("BE-H07-03", "Kamera monitorująca zostaje zasłonięta przez ruch Silników pozycjonujących"),
                 ("BE-H07-04", "Komputer sterujący zatrzymuje przetwarzanie strumienia z Kamery"),
             ]),
@@ -123,39 +122,44 @@ TREES = {
         "top": ("H-08 TOP", "Emisja wiązki promieniowania w niewłaściwym trybie pracy"),
         "gate": "OR",
         "branches": [
-            ("G-H08-A", "Emisja przy obecności personelu w bunkrze", "AND", [
-                ("BE-H08-01", "Blokada drzwi bunkra nie sygnalizuje otwarcia do Komputera"),
-                ("BE-H08-02", "Elektroradiolog celowo omija zabezpieczenia z poziomu Konsoli"),
-                ("BE-H08-03", "Komputer sterujący zezwala na emisję mimo braku sygnału z Blokady"),
+            ("G-H08-A", "Emisja przy obecności personelu lub otwartych drzwiach", "AND", [
+                ("G-H08-A1", "Niebezpieczna obecność w bunkrze", "OR", [
+                    ("BE-H08-01", "Personel pozostaje w bunkrze po przejściu systemu do emisji"),
+                    ("BE-H08-02", "Drzwi bunkra pozostają otwarte podczas próby Beam On"),
+                ]),
+                ("BE-H08-03", "Blokada drzwi bunkra nie przerywa obwodu bezpieczeństwa"),
+                ("BE-H08-04", "Komputer sterujący lub Akcelerator liniowy dopuszcza Beam On mimo braku warunków Treatment"),
             ]),
-            ("G-H08-B", "Błędny tryb terapeutyczny zamiast serwisowego", "AND", [
-                ("BE-H08-04", "Fizyk medyczny pozostawia Komputer sterujący w trybie serwisowym"),
-                ("BE-H08-05", "Baza danych pacjentów podmienia plan terapeutyczny na kalibracyjny"),
-                ("BE-H08-06", "Komputer sterujący ignoruje zabezpieczenia trybu klinicznego"),
+            ("G-H08-B", "Emisja planu QA lub serwisowego przy pacjencie", "AND", [
+                ("G-H08-B1", "System pracuje w kontekście QA lub serwisowym", "OR", [
+                    ("BE-H08-05", "Fizyk medyczny pozostawia Komputer sterujący w trybie QA lub serwisowym"),
+                    ("BE-H08-06", "Komputer sterujący ładuje plan QA w procedurze oznaczonej jako Treatment"),
+                ]),
+                ("BE-H08-07", "Pacjent znajduje się na Stole pacjenta jak przy frakcji terapeutycznej"),
+                ("BE-H08-08", "Konsola operatora lub elektroradiolog nie wykrywa niezgodności trybu przed Beam On"),
             ]),
             ("G-H08-C", "Emisja w Trybie gotowości (Idle)", "OR", [
-                ("BE-H08-07", "Akcelerator liniowy ulega awarii i generuje wiązkę spontanicznie"),
-                ("BE-H08-08", "Komputer sterujący błędnie interpretuje stan jako gotowy do emisji"),
+                ("BE-H08-09", "Akcelerator liniowy generuje wiązkę spontanicznie mimo blokady wysokiego napięcia"),
+                ("BE-H08-10", "Komputer sterujący błędnie przechodzi z Idle do Treatment i aktywuje Beam On bez wymaganych warunków"),
             ]),
         ],
     },
     "h09": { 
-        "top": ("H-09 TOP", "Aktywacja Wyłącznika awaryjnego (E-Stop) nie odcina systemu"),
+        "top": ("H-09 TOP", "System nie przechodzi do stanu awaryjnego, gdy wymagane jest zatrzymanie"),
         "gate": "OR",
         "branches": [
-            ("G-H09-A", "Brak wyzwolenia sygnału z urządzenia", "OR", [
+            ("G-H09-A", "E-Stop nie zostaje skutecznie aktywowany", "OR", [
                 ("BE-H09-01", "Wyłącznik awaryjny (E-Stop) blokuje się mechanicznie podczas wciskania"),
                 ("BE-H09-02", "Elektroradiolog nie ma dostępu do Wyłącznika awaryjnego w bunkrze"),
-                ("BE-H09-03", "Wyłącznik awaryjny (E-Stop) nie przerywa obwodu z powodu uszkodzenia"),
-                ("BE-H09-04", "Elektroradiolog w panice opuszcza Konsolę nie wciskając Wyłącznika"),
+                ("BE-H09-03", "Elektroradiolog w panice opuszcza Konsolę nie wciskając Wyłącznika"),
             ]),
-            ("G-H09-B", "Ignorowanie zatrzymania awaryjnego przez system", "OR", [
-                ("BE-H09-05", "Komputer sterujący ignoruje programowy sygnał od Wyłącznika"),
-                ("BE-H09-06", "Konsola operatora opóźnia przekazanie sygnału awaryjnego"),
-                # ZAGŁĘBIENIE 4 POZIOMU - z użyciem głównych bloków omijających E-Stop
-                ("G-H09-B1", "Elementy wykonawcze maszyny omijają fizyczny sygnał E-Stop", "OR", [
-                    ("BE-H09-07", "Akcelerator liniowy nie przerywa emisji mimo rozłączenia sprzętowego"),
-                    ("BE-H09-08", "Silniki pozycjonujące kontynuują ruch bez zasilania z obwodu E-Stop"),
+            ("G-H09-B", "Aktywowany E-Stop nie odcina energii", "OR", [
+                ("BE-H09-04", "Wyłącznik awaryjny (E-Stop) nie przerywa obwodu z powodu uszkodzenia"),
+                ("BE-H09-05", "Przekaźnik bezpieczeństwa nie rozłącza toru wysokiego napięcia"),
+                ("G-H09-B1", "Elementy wykonawcze nie przechodzą do stanu bezpiecznego", "OR", [
+                    ("BE-H09-06", "Akcelerator liniowy nie przerywa emisji mimo sygnału obwodu bezpieczeństwa"),
+                    ("BE-H09-07", "Obwód E-Stop nie odcina zasilania Silników pozycjonujących"),
+                    ("BE-H09-08", "Mechanika Stołu pacjenta lub gantry kontynuuje ruch wskutek bezwładności po odcięciu zasilania"),
                 ]),
             ]),
         ],
@@ -176,7 +180,7 @@ TREES = {
                 ]),
             ]),
             ("G-H10-C", "Brak wykrycia niezgodności przed włączeniem wiązki", "OR", [
-                ("BE-H10-07", "Konsola operatora błędnie formatuje i ucina identyfikator w UI"),
+                ("BE-H10-07", "Konsola operatora wyświetla skrócony identyfikator pacjenta"),
                 ("BE-H10-08", "Elektroradiolog pomija procedurę potwierdzenia tożsamości na Konsoli"),
                 ("BE-H10-09", "Komputer sterujący zezwala na egzekucję planu o statusie roboczym"),
             ]),
