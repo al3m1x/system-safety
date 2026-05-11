@@ -18,25 +18,27 @@ else:
 TREES = {
     "h01": { 
         "top": ("H-01 TOP", "Nadmierna dawka promieniowania dostarczona pacjentowi"),
-        "gate": "OR",
+        "gate": "AND", # Obrona w głąb: musi zepsuć się maszyna I operator musi nie zareagować
         "branches": [
-            ("G-H01-A", "System nie wstrzymuje automatycznie wiązki", "OR", [
-                ("BE-H01-01", "Komputer sterujący błędnie zlicza Monitor Units (MU)"),
-                ("BE-H01-02", "Komputer sterujący zawiesza się przed wysłaniem komendy Beam Off"),
-                # ZAGŁĘBIENIE 4 POZIOMU - z użyciem głównego bloku (Akceleratora)
-                ("G-H01-A1", "Akcelerator liniowy podtrzymuje emisję niezależnie", "OR", [
-                    ("BE-H01-03", "Akcelerator liniowy ignoruje sprzętowy sygnał odcięcia od Komputera"),
-                    ("BE-H01-04", "Akcelerator liniowy ulega awarii i generuje wiązkę spontanicznie"),
+            ("G-H01-AB", "Fizyczna lub programowa awaria dawkowania", "OR", [
+                ("G-H01-A", "System nie wstrzymuje automatycznie wiązki", "OR", [
+                    ("BE-H01-01", "Komputer sterujący błędnie zlicza Monitor Units (MU)"),
+                    ("BE-H01-02", "Komputer sterujący zawiesza się przed wysłaniem komendy Beam Off"),
+                    ("G-H01-A1", "Akcelerator liniowy podtrzymuje emisję niezależnie", "OR", [
+                        ("BE-H01-03", "Akcelerator liniowy ignoruje sprzętowy sygnał odcięcia od Komputera"),
+                        ("BE-H01-04", "Akcelerator liniowy ulega awarii i generuje wiązkę spontanicznie"),
+                    ]),
                 ]),
-            ]),
-            ("G-H01-B", "Zaniżony pomiar dostarczanej dawki", "OR", [
-                ("BE-H01-05", "Detektor dawki ulega nasyceniu przy wysokiej mocy wiązki"),
-                ("BE-H01-06", "Detektor dawki traci kalibrację z powodu awarii pomiarowej"),
-                ("BE-H01-07", "Komputer sterujący błędnie interpretuje sygnał z Detektora"),
+                ("G-H01-B", "Zaniżony pomiar dostarczanej dawki", "OR", [
+                    ("BE-H01-05", "Detektor dawki ulega nasyceniu przy wysokiej mocy wiązki"),
+                    ("BE-H01-06", "Detektor dawki traci kalibrację z powodu awarii pomiarowej"),
+                    ("BE-H01-07", "Komputer sterujący błędnie interpretuje sygnał z Detektora"),
+                ]),
             ]),
             ("G-H01-C", "Brak reakcji na stanowisku operatorskim", "OR", [
                 ("BE-H01-08", "Konsola operatora ulega awarii i nie wyświetla stanu dawki"),
                 ("BE-H01-09", "Wyłącznik awaryjny (E-Stop) blokuje się w pozycji zwartej"),
+                ("BE-H01-10", "Elektroradiolog nie zauważa alarmu przedawkowania na Konsoli"),
             ]),
         ],
     },
@@ -303,11 +305,13 @@ def render(name, tree):
                 
                 current_y = sub_gate_drop_y + 20
                 
-                sub_connections = [current_y + j * gap + 55 for j in range(len(sub_basics))]
-                if sub_basics:
+                # Filter to only 2-tuples (basic events) for sub-level rendering
+                sub_basics_filtered = [x for x in sub_basics if len(x) == 2]
+                sub_connections = [current_y + j * gap + 55 for j in range(len(sub_basics_filtered))]
+                if sub_basics_filtered:
                     line(draw, (sub_bus_x, sub_gate_drop_y), (sub_bus_x, sub_connections[-1]))
                 
-                for sid, stxt in sub_basics:
+                for sid, stxt in sub_basics_filtered:
                     srect = (sub_bus_x + 45, current_y, cx + box_w / 2, current_y + 110)
                     line(draw, (sub_bus_x, current_y + 55), (srect[0], current_y + 55))
                     box(draw, srect, sid, stxt, f18, f22b)
