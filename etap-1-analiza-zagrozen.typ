@@ -116,10 +116,10 @@ Przyjęto następującą jakościową macierz krytyczności. W każdej komórce 
   align: center + horizon,
   table.cell(colspan: 2, rowspan: 2, stroke: none)[],
   table.cell(colspan: 4, fill: luma(230))[*Ciężkość*],
-  table.cell(fill: luma(245))[*Marginalny*], 
-  table.cell(fill: luma(245))[*Umiarkowany*], 
-  table.cell(fill: luma(245))[*Poważny*], 
-  table.cell(fill: luma(245))[*Krytyczny*],
+  table.cell(fill: luma(245))[*Marginalna*], 
+  table.cell(fill: luma(245))[*Umiarkowana*], 
+  table.cell(fill: luma(245))[*Poważna*], 
+  table.cell(fill: luma(245))[*Krytyczna*],
   table.cell(rowspan: 4, fill: luma(230))[
     #rotate(-90deg, reflow: true)[*Prawdopodobieństwo*]
   ],

@@ -123,17 +123,17 @@ TREES = {
         "top": ("H-08 TOP", "Emisja wiązki promieniowania w niewłaściwym trybie pracy"),
         "gate": "OR",
         "branches": [
-            ("G-H08-A", "Emisja przy obecności personelu w bunkrze", "OR", [ # ZMIANA NA OR
+            ("G-H08-A", "Emisja przy obecności personelu w bunkrze", "AND", [
                 ("BE-H08-01", "Blokada drzwi bunkra nie sygnalizuje otwarcia do Komputera"),
                 ("BE-H08-02", "Elektroradiolog celowo omija zabezpieczenia z poziomu Konsoli"),
                 ("BE-H08-03", "Komputer sterujący zezwala na emisję mimo braku sygnału z Blokady"),
             ]),
-            ("G-H08-B", "Błędny tryb terapeutyczny zamiast serwisowego", "OR", [ # ZMIANA NA OR
+            ("G-H08-B", "Błędny tryb terapeutyczny zamiast serwisowego", "AND", [
                 ("BE-H08-04", "Fizyk medyczny pozostawia Komputer sterujący w trybie serwisowym"),
                 ("BE-H08-05", "Baza danych pacjentów podmienia plan terapeutyczny na kalibracyjny"),
                 ("BE-H08-06", "Komputer sterujący ignoruje zabezpieczenia trybu klinicznego"),
             ]),
-            ("G-H08-C", "Emisja w Trybie gotowości (Idle)", "OR", [ # ZMIANA NA OR
+            ("G-H08-C", "Emisja w Trybie gotowości (Idle)", "OR", [
                 ("BE-H08-07", "Akcelerator liniowy ulega awarii i generuje wiązkę spontanicznie"),
                 ("BE-H08-08", "Komputer sterujący błędnie interpretuje stan jako gotowy do emisji"),
             ]),
