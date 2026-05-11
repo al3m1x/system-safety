@@ -53,7 +53,7 @@
   #text(17pt, weight: "bold")[Analiza zagrożeń systemu radioterapii LINAC] \
   #v(1em)
   #text(12pt)[Projekt: Systemy Krytyczne (Safety-Critical Systems)] \
-  #text(11pt)[Etap 1: Hazard analysis | Wersja: 1.1 | Data: #datetime.today().display()]
+  #text(11pt)[Etap 1: Hazard analysis | Wersja: 1.3 | Data: #datetime.today().display()]
 ]
 
 #line(length: 100%, stroke: 1pt + gray)
@@ -61,7 +61,7 @@
 
 = Cel i zakres analizy
 
-Celem dokumentu jest identyfikacja zagrożeń dla medycznego akceleratora liniowego LINAC opisanego w dokumencie `main.typ`, a następnie rozwinięcie drzew błędów FTA dla siedmiu najbardziej krytycznych zagrożeń. Analiza traktuje hazard jako niebezpieczną sytuację z potencjałem szkody, a nie jako sam skutek wypadkowy.
+Celem dokumentu jest identyfikacja zagrożeń dla medycznego akceleratora liniowego LINAC opisanego w dokumencie `main.typ`, a następnie rozwinięcie drzew błędów FTA dla ośmiu najbardziej krytycznych zagrożeń. Analiza traktuje hazard jako niebezpieczną sytuację z potencjałem szkody, a nie jako sam skutek wypadkowy.
 
 Analiza obejmuje tryby pracy zdefiniowane w opisie systemu: tryb gotowości, pozycjonowania, terapeutyczny, kalibracji/QA oraz awaryjny. Uwzględniono źródła zagrożeń z list kontrolnych: operacyjne, środowiskowe, elektryczne, sprzętowe, programowe, mechaniczne, biologiczne oraz wynikające z nieprawidłowego użycia systemu.
 
@@ -72,6 +72,18 @@ Analiza obejmuje tryby pracy zdefiniowane w opisie systemu: tryb gotowości, poz
 - Blokada drzwi bunkra i przyciski E-Stop są zabezpieczeniami sprzętowymi, które powinny odcinać zasilanie wysokiego napięcia niezależnie od komputera sterującego.
 - Elementy FTA odnoszą się do komponentów zdefiniowanych w `main.typ`: komputera sterującego, bazy danych pacjentów, akceleratora liniowego, detektora dawki, konsoli operatora, E-Stop, blokady drzwi bunkra, kamery monitorującej, MLC, stołu pacjenta oraz silników pozycjonujących.
 - Prawdopodobieństwo w tabelach jest oszacowaniem jakościowym dla realistycznej eksploatacji klinicznej, a nie dokładną wartością statystyczną.
+
+= Słownik pojęć i skrótów
+
+Dla zapewnienia jednoznaczności i spójności analizy, poniżej zdefiniowano kluczowe terminy i skróty techniczne używane w dokumencie oraz na schematach FTA:
+
+- *LINAC (Linear Accelerator):* Medyczny akcelerator liniowy -- urządzenie do teleradioterapii generujące wysokoenergetyczne promieniowanie (wiązkę fotonów lub elektronów) służące do niszczenia komórek nowotworowych.
+- *E-Stop (Emergency Stop):* Wyłącznik awaryjny -- sprzętowy, najwyższy priorytetowo obwód bezpieczeństwa. Jego aktywacja natychmiastowo odcina zasilanie elementów wykonawczych (np. toru wysokiego napięcia i silników) niezależnie od logiki oprogramowania.
+- *MLC (Multileaf Collimator):* Kolimator wielolistkowy -- urządzenie znajdujące się w głowicy akceleratora, wyposażone w dziesiątki niezależnie sterowanych, wolframowych "listków", które kształtują wiązkę promieniowania tak, aby precyzyjnie odpowiadała obrysowi guza.
+- *MU (Monitor Units):* Jednostki monitorujące -- standardowa w radioterapii miara pochłoniętej dawki promieniowania dostarczanej przez akcelerator, zliczana w czasie rzeczywistym przez sprzętowy detektor dawki (najczęściej komorę jonizacyjną).
+- *Beam On / Beam Off:* Stany sterujące emisją wiązki. "Beam On" oznacza aktywną generację i dostarczanie promieniowania, natomiast "Beam Off" oznacza poprawne przerwanie lub zakończenie tego procesu.
+- *Izocentrum (Isocenter):* Punkt w przestrzeni trójwymiarowej, wokół którego obracają się elementy pozycjonujące maszyny, stół oraz kolimator, wyznaczający docelowe miejsce ogniskowania wiązki wewnątrz ciała pacjenta.
+- *QA (Quality Assurance):* Zapewnienie jakości -- procedury kalibracyjne i testowe wykonywane za pomocą fantomów (sztucznych modeli) przez fizyków medycznych w celu weryfikacji poprawności dozowania promieniowania.
 
 = Skale oceny
 
@@ -136,9 +148,9 @@ W ramach analizy zidentyfikowano 10 głównych hazardów. Definicje utrzymano na
   ),
   [H-01], [Nadmierna dawka promieniowania], [Błąd licznika MU w komputerze sterującym, zaniżony odczyt detektora dawki, zablokowany przekaźnik wysokiego napięcia, niepoprawna wartość dawki w planie.], [Oparzenia popromienne, martwica tkanek, poważne uszkodzenie narządów lub śmierć pacjenta.], [Niskie], [Krytyczna], crit("Wysokie"),
   [H-02], [Zbyt niska dawka terapeutyczna], [Przedwczesne wyłączenie wiązki, awaria akceleratora, błędna kalibracja dawki, niepełne wykonanie frakcji lub błędna wartość dawki w planie.], [Nieskuteczne leczenie nowotworu, progresja choroby, konieczność powtórzenia terapii.], [Niskie], [Poważna], crit("Średnie"),
-  [H-03], [Napromienienie niewłaściwego obszaru pacjenta], [Błędne pozycjonowanie stołu lub gantry, zły plan pacjenta, błąd transformacji współrzędnych, ruch pacjenta podczas emisji.], [Napromienienie zdrowych tkanek i niedostarczenie dawki do guza; możliwe trwałe obrażenia lub śmierć.], [Niskie], [Krytyczna], crit("Wysokie"),
+  [H-03], [Napromienienie niewłaściwego obszaru pacjenta], [Błędne pozycjonowanie stołu lub silników pozycjonujących, zły plan pacjenta, błąd transformacji współrzędnych, ruch pacjenta podczas emisji.], [Napromienienie zdrowych tkanek i niedostarczenie dawki do guza; możliwe trwałe obrażenia lub śmierć.], [Niskie], [Krytyczna], crit("Wysokie"),
   [H-04], [Osoba znajduje się w bunkrze podczas emisji wiązki], [Błąd operatora, obejście blokady drzwi, nieskuteczna kontrola obecności, awaria sygnalizacji lub monitoringu.], [Nieplanowana ekspozycja personelu lub osoby postronnej na promieniowanie jonizujące.], [Marginalne], [Krytyczna], crit("Średnie"),
-  [H-05], [Kolizja gantry lub stołu z pacjentem albo operatorem], [Awaria krańcówek, błędne enkodery, niekontrolowane polecenie ruchu, błąd operatora w trybie pozycjonowania albo serwisowym.], [Zmiażdżenie, złamania, urazy głowy lub uszkodzenie sprzętu.], [Średnie], [Poważna], crit("Wysokie"),
+  [H-05], [Kolizja elementów ruchomych (stołu pacjenta lub układu silników) z człowiekiem], [Niewłaściwe wysterowanie silników pozycjonujących przez komputer sterujący, awaria sprzętowa silników lub stołu pacjenta, błąd elektroradiologa w trybie pozycjonowania.], [Zmiażdżenie, złamania, urazy głowy lub uszkodzenie sprzętu.], [Średnie], [Poważna], crit("Wysokie"),
   [H-06], [Nieprawidłowy kształt pola promieniowania], [Zacięcie listków MLC, błąd sterowania MLC, utrata informacji zwrotnej o pozycji listków, użycie niewłaściwej konfiguracji pola.], [Napromienienie zdrowych tkanek, niedostateczna dawka w części guza lub uszkodzenie narządu krytycznego.], [Niskie], [Krytyczna], crit("Wysokie"),
   [H-07], [Brak skutecznego monitorowania pacjenta podczas emisji], [Awaria kamery, zamrożenie obrazu na konsoli, opóźnienie transmisji, nieuwaga operatora, brak alarmu utraty wideo.], [Ruch pacjenta lub pogorszenie stanu nie zostają wykryte, co może prowadzić do błędnej ekspozycji albo opóźnienia reakcji.], [Średnie], [Poważna], crit("Wysokie"),
   [H-08], [Emisja wiązki w niewłaściwym trybie pracy], [Błąd logiki trybów, pozostawiony tryb kalibracji, obejście kontroli dostępu, użycie planu QA przy obecnym pacjencie.], [Nieautoryzowana lub niekontrolowana emisja promieniowania poza zatwierdzoną procedurą terapeutyczną.], [Marginalne], [Krytyczna], crit("Średnie"),
@@ -149,7 +161,7 @@ W ramach analizy zidentyfikowano 10 głównych hazardów. Definicje utrzymano na
 
 = Wybrane zagrożenia do analizy FTA
 
-Zidentyfikowane zagrożenia poddano selekcji i do dalszej analizy wybrano 7 z nich: H-01, H-03, H-05, H-06, H-07, H-09 oraz H-10. Dobór obejmuje różne klasy zagrożeń: radiacyjne, mechaniczne, programowe, ludzkie, środowiskowo-organizacyjne i elektryczne.
+Zidentyfikowane zagrożenia poddano selekcji i do dalszej analizy wybrano 8 z nich: H-01, H-03, H-05, H-06, H-07, H-08, H-09 oraz H-10. Dobór obejmuje różne klasy zagrożeń: radiacyjne, mechaniczne, programowe, ludzkie, środowiskowo-organizacyjne i elektryczne. Zespół liczy 4 osoby, co spełnia wymóg wytypowania dwóch hazardów na członka zespołu.
 
 W drzewach FTA zastosowano następujące oznaczenia:
 - `OR` oznacza, że wystarczy jedno zdarzenie podrzędne.
@@ -174,14 +186,14 @@ Scenariusz H-01 jest krytyczny, ponieważ pojedyncza awaria pomiaru dawki może 
 
 W tym scenariuszu ważne są zarówno błędy sprzętowe pozycjonowania, jak i błędy danych terapeutycznych. Nawet poprawnie działająca wiązka staje się niebezpieczna, jeżeli izocentrum lub plan leczenia nie odpowiadają rzeczywistej pozycji pacjenta.
 
-== FTA H-05: Kolizja gantry lub stołu z pacjentem albo operatorem
+== FTA H-05: Kolizja elementów ruchomych z człowiekiem
 
 #figure(
   image("figures/fta-h05.jpg", width: 100%),
   caption: [Drzewo FTA dla H-05],
 )
 
-Najbardziej ryzykowne fazy dla H-05 to pozycjonowanie i prace serwisowe, ponieważ w bunkrze może przebywać człowiek, a system pozwala na ruch stołu, gantry lub elementów pozycjonujących.
+Najbardziej ryzykowne fazy dla H-05 to pozycjonowanie i prace serwisowe, ponieważ w bunkrze może przebywać człowiek, a system pozwala na ruch stołu, obroty maszyny lub innych elementów pozycjonujących.
 
 == FTA H-06: Nieprawidłowy kształt pola promieniowania
 
@@ -200,6 +212,15 @@ H-06 jest osobnym hazardem względem H-03, ponieważ pacjent może być poprawni
 )
 
 H-07 nie musi bezpośrednio oznaczać wypadku, ale usuwa istotną warstwę detekcji. W połączeniu z ruchem pacjenta, pogorszeniem stanu zdrowia lub awarią pozycjonowania może prowadzić do H-03 albo opóźnionego zatrzymania wiązki.
+
+== FTA H-08: Emisja wiązki promieniowania w niewłaściwym trybie pracy
+
+#figure(
+  image("figures/fta-h08.jpg", width: 100%),
+  caption: [Drzewo FTA dla H-08],
+)
+
+Zagrożenie H-08 uwzględnia naruszenie logiki stanów maszyny (np. emisja podczas pozycjonowania lub kalibracji QA). Kluczowe jest tu prawidłowe działanie sprzętowych blokad drzwi, bazy danych pacjentów oraz właściwej interpretacji flag trybów przez główny komputer sterujący.
 
 == FTA H-09: Nieskuteczne zatrzymanie awaryjne
 
@@ -221,14 +242,14 @@ H-09 jest krytyczny, bo E-Stop stanowi ostatnią barierę dla hazardów radiacyj
 
 = Wnioski
 
-Najwyższą krytyczność mają zagrożenia, w których błąd danych, pozycjonowania lub pomiaru dawki może bezpośrednio przełożyć się na napromienienie pacjenta niezgodne z planem leczenia: H-01, H-03, H-05, H-07 oraz H-09. Zagrożenia H-04, H-08 i H-10 mają niższą częstość, ale wymagają szczególnie mocnych zabezpieczeń proceduralnych i sprzętowych, ponieważ ich ciężkość pozostaje krytyczna.
+Najwyższą krytyczność mają zagrożenia, w których błąd danych, pozycjonowania lub pomiaru dawki może bezpośrednio przełożyć się na napromienienie pacjenta niezgodne z planem leczenia: H-01, H-03, H-05, H-07 oraz H-09. Zagrożenia H-04, H-08 i H-10 mają niższą częstość i często charakteryzują się większym udziałem błędu proceduralnego, ale wymagają szczególnie mocnych zabezpieczeń systemowych i walidacyjnych ze względu na swoją krytyczną ciężkość skutków.
 
 Najważniejsze zalecane kierunki redukcji ryzyka to:
 - niezależna weryfikacja dawki i stanu Beam Off poza głównym komputerem sterującym,
 - wymuszona identyfikacja pacjenta i planu leczenia bez ręcznego obejścia w normalnym trybie pracy,
-- jednoznaczna separacja trybów Treatment, Setup i QA,
+- jednoznaczna separacja trybów Treatment, Setup i QA na poziomie sprzętowym i programowym,
 - sprzętowa blokada emisji przy braku statusu MLC Ready,
-- okresowe testy E-Stop, blokady drzwi, krańcówek, enkoderów i toru monitoringu wideo,
+- okresowe testy E-Stop, blokady drzwi, krańcówek i toru monitoringu wideo,
 - procedury kontroli energii resztkowej podczas prac serwisowych.
 
 = Wykorzystanie AI (AI usage)
