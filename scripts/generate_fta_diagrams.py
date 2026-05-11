@@ -159,19 +159,24 @@ TREES = {
         ],
     },
     "h10": { 
-        "top": ("H-10 TOP", "Wczytanie planu nieodpowiadającego aktualnemu pacjentowi"),
+        "top": ("H-10 TOP", "Wczytanie i realizacja planu nieodpowiadającego pacjentowi"),
         "gate": "AND",
         "branches": [
-            ("G-H10-A", "System udostępnia niewłaściwe dane", "OR", [
-                ("BE-H10-01", "Baza danych pacjentów paruje identyfikator z błędnym rekordem"),
-                ("BE-H10-02", "Baza danych pacjentów wysyła starszą wersję planu zamiast aktualnej"),
-                ("BE-H10-03", "Komputer sterujący wczytuje plan poprzedniego pacjenta z pamięci"),
+            ("G-H10-AB", "Zainicjowanie niewłaściwego kontekstu leczenia", "OR", [
+                ("G-H10-A", "Błąd danych cyfrowych w systemie IT", "OR", [
+                    ("BE-H10-01", "Baza danych pacjentów paruje identyfikator z błędnym rekordem"),
+                    ("BE-H10-02", "Baza danych pacjentów wysyła starszą wersję planu zamiast aktualnej"),
+                    ("BE-H10-03", "Komputer sterujący wczytuje plan poprzedniego pacjenta z pamięci"),
+                ]),
+                ("G-H10-B", "Fizyczna pomyłka tożsamości pacjenta", "OR", [
+                    ("BE-H10-05", "Pacjent reaguje na nieswoje nazwisko podczas wzywania do bunkra"),
+                    ("BE-H10-06", "Elektroradiolog wprowadza pacjenta o zbieżnym nazwisku z poczekalni"),
+                ]),
             ]),
-            ("G-H10-B", "Luki w procesie weryfikacji tożsamości", "OR", [
-                ("BE-H10-04", "Lekarz nie weryfikuje ostatecznego planu w Bazie danych pacjentów"),
-                ("BE-H10-05", "Konsola operatora błędnie formatuje i ucina identyfikator pacjenta"),
-                ("BE-H10-06", "Elektroradiolog pomija potwierdzenie tożsamości na Konsoli"),
-                ("BE-H10-07", "Pacjent reaguje na nieswoje nazwisko podane przez Elektroradiologa"),
+            ("G-H10-C", "Brak wykrycia niezgodności przed włączeniem wiązki", "OR", [
+                ("BE-H10-07", "Konsola operatora błędnie formatuje i ucina identyfikator w UI"),
+                ("BE-H10-08", "Elektroradiolog pomija procedurę potwierdzenia tożsamości na Konsoli"),
+                ("BE-H10-09", "Komputer sterujący zezwala na egzekucję planu o statusie roboczym"),
             ]),
         ],
     },
